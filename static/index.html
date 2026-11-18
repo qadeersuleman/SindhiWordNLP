@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SindhiVoice AI — Voice-Based Sindhi to English Translator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-badge">
+        <span class="logo-icon">🎙️</span>
+        <div class="logo-text">
+          <h1>SindhiVoice <span class="highlight">AI</span></h1>
+          <p class="subtitle">Voice-Based Sindhi to English Translator  •  Class 9 & 10 AI Project</p>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-chip" id="engine-status">
+        <span class="status-dot"></span>
+        <span class="status-label">Voice & NLP Ready</span>
+      </div>
+      <button class="theme-toggle" id="theme-btn" title="Toggle Dark/Light Mode">🌙</button>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <!-- Live 5-Step NLP Process Visualizer (From Poster 1) -->
+    <section class="pipeline-section">
+      <div class="section-title-row">
+        <h2>⚡ 5-Step Live NLP Pipeline</h2>
+        <span class="badge-tag">Poster 1 Process</span>
+      </div>
+      <div class="pipeline-track">
+        <div class="pipeline-step" id="step-1">
+          <div class="step-circle"><span class="step-num">1</span><span class="step-icon">🎙️</span></div>
+          <div class="step-info"><span class="step-title">Voice Input</span><span class="step-sub">Mic Listening</span></div>
+        </div>
+        <div class="pipeline-arrow">➔</div>
+        <div class="pipeline-step" id="step-2">
+          <div class="step-circle"><span class="step-num">2</span><span class="step-icon">⚙️</span></div>
+          <div class="step-info"><span class="step-title">Preprocessing</span><span class="step-sub">Clean & Normalize</span></div>
+        </div>
+        <div class="pipeline-arrow">➔</div>
+        <div class="pipeline-step" id="step-3">
+          <div class="step-circle"><span class="step-num">3</span><span class="step-icon">🔢</span></div>
+          <div class="step-info"><span class="step-title">Vectorization</span><span class="step-sub">Word Vector [1,0,0,0]</span></div>
+        </div>
+        <div class="pipeline-arrow">➔</div>
+        <div class="pipeline-step" id="step-4">
+          <div class="step-circle"><span class="step-num">4</span><span class="step-icon">🧠</span></div>
+          <div class="step-info"><span class="step-title">AI Model</span><span class="step-sub">Pattern Predict</span></div>
+        </div>
+        <div class="pipeline-arrow">➔</div>
+        <div class="pipeline-step" id="step-5">
+          <div class="step-circle"><span class="step-num">5</span><span class="step-icon">🔊</span></div>
+          <div class="step-info"><span class="step-title">Voice Output</span><span class="step-sub">Speaks in English!</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Voice & Translation Grid -->
+    <div class="main-grid">
+      <!-- Left Column: Voice Recording Center -->
+      <section class="card voice-card">
+        <div class="card-header">
+          <h3>🎤 Voice Input Station</h3>
+          <span class="live-pill" id="live-indicator">Ready</span>
+        </div>
+
+        <div class="mic-container">
+          <div class="soundwave-ring" id="wave-ring"></div>
+          <button class="big-mic-btn" id="mic-btn" title="Click to Speak">
+            <span class="mic-emoji">🎙️</span>
+            <span class="mic-text" id="mic-btn-text">Click to Speak</span>
+          </button>
+        </div>
+
+        <p class="mic-hint" id="mic-hint">
+          Click the mic and speak in <strong>Sindhi</strong> (e.g. <em>"Salam"</em>, <em>"Meherbani"</em>, <em>"Haa"</em>, <em>"Na"</em>)
+        </p>
+
+        <!-- Waveform Visualizer Bars -->
+        <div class="visualizer" id="audio-visualizer">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+
+        <!-- Or Manual Text Option -->
+        <div class="manual-input-row">
+          <input type="text" id="manual-text" placeholder="Or type Sindhi word (e.g. سلام)..." dir="rtl" />
+          <button id="send-text-btn" class="action-btn">Translate & Speak ⚡</button>
+        </div>
+      </section>
+
+      <!-- Right Column: AI Translation & Voice Output Result -->
+      <section class="card result-card">
+        <div class="card-header">
+          <h3>🔊 English Voice Translation Result</h3>
+          <span class="confidence-badge" id="conf-badge">Waiting for Speech...</span>
+        </div>
+
+        <div class="result-body">
+          <div class="sindhi-box">
+            <span class="box-label">Spoken Sindhi Text:</span>
+            <div class="sindhi-display" id="sindhi-display">سلام</div>
+            <span class="phonetic-display" id="phonetic-display">Phonetic: Salam</span>
+          </div>
+
+          <div class="arrow-divider">⬇ Translates into English ⬇</div>
+
+          <div class="english-box">
+            <span class="box-label">English Voice & Meaning:</span>
+            <div class="english-display" id="english-display">"Hello! Nice to meet you."</div>
+            <p class="desc-display" id="desc-display">Warm greeting used when meeting someone warmly.</p>
+          </div>
+
+          <div class="result-actions">
+            <button class="speak-replay-btn" id="replay-btn">
+              <span>🔊</span> Speak Translation Aloud
+            </button>
+            <button class="copy-btn" id="copy-btn" title="Copy Translation">
+              <span>📋</span> Copy
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Poster 2 Vocabulary Quick-Test Grid -->
+    <section class="card vocab-section">
+      <div class="section-title-row">
+        <h3>📚 Poster 2: Four Core Sindhi Words (Quick Test)</h3>
+        <span class="badge-tag">Click any card to Test & Hear</span>
+      </div>
+
+      <div class="vocab-grid">
+        <div class="vocab-card" data-word="سلام">
+          <div class="vocab-header">
+            <span class="sindhi-title">سلام</span>
+            <span class="tag-badge blue">Greeting</span>
+          </div>
+          <div class="vocab-meaning">"Hello / Greetings"</div>
+          <p class="vocab-sample">Phonetic: Salam</p>
+          <button class="vocab-test-btn" data-word="سلام">🎙️ Test & Speak</button>
+        </div>
+
+        <div class="vocab-card" data-word="ڏينھواد">
+          <div class="vocab-header">
+            <span class="sindhi-title">ڏينھواد / مھرباني</span>
+            <span class="tag-badge green">Gratitude</span>
+          </div>
+          <div class="vocab-meaning">"Thank You Very Much"</div>
+          <p class="vocab-sample">Phonetic: Dhanwaad / Meherbani</p>
+          <button class="vocab-test-btn" data-word="ڏينھواد">🎙️ Test & Speak</button>
+        </div>
+
+        <div class="vocab-card" data-word="ھا">
+          <div class="vocab-header">
+            <span class="sindhi-title">ھا</span>
+            <span class="tag-badge pink">Confirm</span>
+          </div>
+          <div class="vocab-meaning">"Yes, I Agree"</div>
+          <p class="vocab-sample">Phonetic: Haa</p>
+          <button class="vocab-test-btn" data-word="ھا">🎙️ Test & Speak</button>
+        </div>
+
+        <div class="vocab-card" data-word="نہ">
+          <div class="vocab-header">
+            <span class="sindhi-title">نہ</span>
+            <span class="tag-badge purple">Decline</span>
+          </div>
+          <div class="vocab-meaning">"No, I Decline"</div>
+          <p class="vocab-sample">Phonetic: Na</p>
+          <button class="vocab-test-btn" data-word="نہ">🎙️ Test & Speak</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Controls: Voice Settings & Spoken History -->
+    <div class="bottom-grid">
+      <!-- Voice Audio Settings -->
+      <section class="card settings-card">
+        <div class="card-header">
+          <h3>⚙️ English Voice Settings</h3>
+        </div>
+        <div class="settings-body">
+          <div class="setting-item">
+            <label for="voice-select">English Speaker Voice:</label>
+            <select id="voice-select" class="styled-select"></select>
+          </div>
+          <div class="setting-item">
+            <label for="voice-rate">Speaking Speed: <span id="rate-val">1.0x</span></label>
+            <input type="range" id="voice-rate" min="0.7" max="1.4" step="0.1" value="1.0" />
+          </div>
+          <div class="setting-item toggle-row">
+            <label for="auto-speak-toggle">Auto-Speak English when recognized:</label>
+            <input type="checkbox" id="auto-speak-toggle" checked />
+          </div>
+        </div>
+      </section>
+
+      <!-- Spoken History Log -->
+      <section class="card history-card">
+        <div class="card-header">
+          <h3>📝 Spoken History Log</h3>
+          <button class="clear-btn" id="clear-history-btn">Clear Log</button>
+        </div>
+        <div class="history-list" id="history-list">
+          <div class="history-empty">No words translated yet. Speak into the microphone!</div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <p>⭐ <strong>Small Steps... Big Impact!</strong>  •  SindhiVoice AI  •  Class 9 & 10 AI Project</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
