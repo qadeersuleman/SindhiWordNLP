@@ -1,0 +1,4 @@
+# Sindhi NLP Word Classifier (Class 9 & 10 AI Project)
+# The demo runs directly with standard Python (zero external dependencies required)!
+# Optional packages for further machine learning experiments:
+scikit-learn>=1.4.0
